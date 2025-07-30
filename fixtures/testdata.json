@@ -1,0 +1,12 @@
+{
+  "url": {
+      "baseurl": "https://yourprojectloginpagedev.com/",
+      "Homepage": "https://yourprojecthomepagedev/homepage/"
+    },
+  "credentials": {  
+      "validUser": {
+        "username": "username",
+        "password": "password"
+    }
+  }
+}
