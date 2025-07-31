@@ -1,21 +1,29 @@
-
 # 🎭 Playwright E2E Testing Project
 
-A comprehensive end-to-end testing suite using Playwright with multiple reporting tools integration and centralized selector management.
+A comprehensive end-to-end testing suite using Playwright with TypeScript, featuring Allure reporting, GitHub Actions integration, and automated deployments.
 
-## Features
+## ✨ Features
 
-- Multi-browser testing (Chrome, Firefox, Safari, Edge)
-- Mobile viewport testing
-- Multiple reporting tools:
-  - Ortoni Report
-  - Allure Report
-  - HTML Report
-- **Centralized Selector Management** via CSV files
-- Environment-based configuration
-- Docker support
-- CI/CD ready
-- TypeScript support
+- **Test Framework:**
+  - Playwright with TypeScript
+  - Multi-browser testing (Chrome, Firefox, Safari, Edge)
+  - Mobile viewport testing and device emulation
+  - Page Object Model architecture
+  - Parallel test execution
+  - Automatic retries for flaky tests
+- **Reporting:**
+  - Allure Report integration
+  - Automatic deployment to GitHub Pages
+  - Slack notifications for test results
+- **CI/CD:**
+  - GitHub Actions workflow
+  - Multi-environment support (dev/stage/prod)
+  - Artifact preservation
+- **Development:**
+  - TypeScript support
+  - Environment-based configuration
+  - Docker support
+  - Centralized selector management
 
 ## Project Structure
 
@@ -51,53 +59,221 @@ playwright-project-template/
 
 ## Quick Start
 
-### Option 1: Local Setup
+### Prerequisites
 
-#### Prerequisites
+- Node.js 18 or higher
+- npm (v7 or higher)
+- Git
 
-- Node.js (v14 or higher)
-- npm (v6 or higher)
-- Java Runtime Environment (for Allure reporting)
+### 🚀 Quick Start
 
-#### Installation
+1. **Clone the repository:**
 
-1. Clone the repository:
 ```bash
 git clone https://github.com/is-raihan/playwright-project-template.git
 cd playwright-project-template
 ```
 
-2. Install dependencies:
+2. **Install dependencies:**
+
 ```bash
-npm install
+npm ci
 ```
 
-3. Install Playwright browsers:
+3. **Install Playwright browsers:**
+
 ```bash
-npx playwright install
+npx playwright install --with-deps
 ```
 
-4. Install Allure command-line tool:
+4. **Setup environment variables:**
+   Create appropriate `.env` file in the `env` directory:
+
 ```bash
-npm install -g allure-commandline
+# .env.dev, .env.stage, or .env.prod
+BASE_URL=https://your-app-url.com
+HOME_URL=https://your-app-url.com
 ```
 
-### Option 2: Docker Setup
+5. **Run tests:**
+
+```bash
+# Run with Allure reporting
+npm run test:with-allure
+
+# Run in headed mode
+npm run test:headed
+
+# Run in debug mode
+npm run test:debug
+```
+
+### 🐳 Docker Support
 
 #### Prerequisites
 
 - Docker
 - Docker Compose
 
-#### Quick Start with Docker
+#### Running with Docker:
 
-1. Clone the repository:
+1. **Run tests in headless mode:**
+
 ```bash
-git clone https://github.com/is-raihan/playwright-project-template.git
-cd playwright-project-template
+docker-compose up
 ```
 
-2. Run tests using Docker:
+2. **Run tests in headed mode:**
+
+```bash
+docker-compose -f docker-compose.headed.yml up
+```
+
+## 📊 Reporting
+
+### Allure Reports
+
+The project automatically generates and deploys Allure reports:
+
+1. **Local Report:**
+
+```bash
+# Generate and open report
+npm run allure:serve
+
+# Generate report only
+npm run allure:generate
+```
+
+2. **CI/CD Report:**
+
+- Automatically deployed to GitHub Pages
+- URL available in GitHub Actions summary
+- Slack notification sent with report link
+
+### GitHub Actions Integration
+
+Our workflow (`playwright-unified.yml`) provides:
+
+1. **Automated Testing:**
+
+   - Runs on every push to main
+   - Runs on pull requests
+   - Manual trigger available
+
+2. **Environment Management:**
+
+   - Automatic environment selection (prod/stage)
+   - Configurable Node.js version
+   - Caching for faster runs
+
+3. **Reporting & Notifications:**
+
+   - Allure report generation
+   - GitHub Pages deployment
+   - Slack notifications
+   - Test artifacts preservation
+
+4. **Test Artifacts:**
+   - Test results preserved
+   - Screenshots and videos available
+   - Traces for debugging
+
+## 🔧 Configuration
+
+### Environment Variables
+
+Create environment-specific files in `env/`:
+
+- `.env.dev` - Development
+- `.env.stage` - Staging
+- `.env.prod` - Production
+
+Example configuration:
+
+```env
+BASE_URL=https://your-app-url.com
+HOME_URL=https://your-app-url.com
+```
+
+### Playwright Config
+
+Key configurations in `playwright.config.ts`:
+
+- Retry settings
+- Timeout values
+- Browser settings
+- Reporter configuration
+
+#### Browser and Device Configuration
+
+The project supports multiple browsers and devices through the Playwright configuration:
+
+```typescript
+// playwright.config.ts
+export default defineConfig({
+  projects: [
+    {
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
+    },
+    {
+      name: "firefox",
+      use: { ...devices["Desktop Firefox"] },
+    },
+    {
+      name: "webkit",
+      use: { ...devices["Desktop Safari"] },
+    },
+    {
+      name: "msedge",
+      use: { ...devices["Desktop Edge"] },
+    },
+    // Mobile browser testing
+    {
+      name: "mobile-chrome",
+      use: { ...devices["Pixel 5"] },
+    },
+    {
+      name: "mobile-safari",
+      use: { ...devices["iPhone 12"] },
+    },
+  ],
+  // Common viewport settings
+  use: {
+    viewport: { width: 1280, height: 720 },
+    // Enable mobile device emulation features
+    deviceScaleFactor: 1,
+    isMobile: false,
+    hasTouch: false,
+  },
+});
+```
+
+You can run tests on specific devices using the built-in device presets:
+
+- iPhone 12
+- Pixel 5
+- iPad Pro
+- Galaxy Tab
+- And many more...
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License.
+
+## 🆘 Support
+
+For support, please open an issue in the GitHub repository.
+
 ```bash
 # Run all tests
 docker-compose up --build
@@ -123,7 +299,7 @@ This project uses a centralized selector management system that stores all selec
 ### Usage Example
 
 ```typescript
-import { getSelector, SelectorKeys } from '../../utils/selectors';
+import { getSelector, SelectorKeys } from "../../utils/selectors";
 
 export class LoginPage extends BasePage {
   readonly usernameInput: Locator;
@@ -132,7 +308,7 @@ export class LoginPage extends BasePage {
 
   constructor(page: Page) {
     super(page);
-    
+
     // Use selectors from CSV file
     this.usernameInput = page.locator(getSelector(SelectorKeys.USERNAME_INPUT));
     this.passwordInput = page.locator(getSelector(SelectorKeys.PASSWORD_INPUT));
@@ -144,19 +320,22 @@ export class LoginPage extends BasePage {
 ### Adding New Selectors
 
 1. Add to `utils/selectors.csv`:
+
 ```csv
 newElementKey,#new-element-id,button,New element description
 ```
 
 2. Add to `utils/selectors.ts`:
+
 ```typescript
 export const SelectorKeys = {
   // ... existing keys
-  NEW_ELEMENT_KEY: 'newElementKey'
+  NEW_ELEMENT_KEY: "newElementKey",
 } as const;
 ```
 
 3. Use in page object:
+
 ```typescript
 this.newElement = page.locator(getSelector(SelectorKeys.NEW_ELEMENT_KEY));
 ```
@@ -197,12 +376,22 @@ npm run test:prod
 ### Browser-specific Tests
 
 ```bash
-# Run tests in Chromium only
-npm run test:chromium
+# Run tests in all browsers
+npm run test
 
 # Run tests in specific browsers
+npx playwright test --project=chromium
 npx playwright test --project=firefox
 npx playwright test --project=webkit
+npx playwright test --project=msedge
+
+# Run tests on mobile viewports
+npx playwright test --project=mobile-chrome
+npx playwright test --project=mobile-safari
+
+# Run tests on specific devices
+npx playwright test --device="iPhone 12"
+npx playwright test --device="Pixel 5"
 ```
 
 ### Docker Commands
@@ -261,7 +450,7 @@ open report-db/index.html
 The project supports multiple environments through configuration files:
 
 - `env/dev.env` - Development environment
-- `env/stage.env` - Staging environment  
+- `env/stage.env` - Staging environment
 - `env/prod.env` - Production environment
 
 ### Environment Variables
@@ -285,7 +474,7 @@ export class LoginPage extends BasePage {
 }
 
 // tests/e2e/login.spec.ts
-test('should login successfully', async ({ page }) => {
+test("should login successfully", async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.login();
 });
@@ -326,7 +515,7 @@ CMD ["npm", "test"]
 ### Docker Compose
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   playwright:
     build: .
