@@ -1,7 +1,7 @@
 
 # 🎭 Playwright E2E Testing Project
 
-A comprehensive end-to-end testing suite using Playwright with multiple reporting tools integration.
+A comprehensive end-to-end testing suite using Playwright with multiple reporting tools integration and centralized selector management.
 
 ## Features
 
@@ -11,290 +11,388 @@ A comprehensive end-to-end testing suite using Playwright with multiple reportin
   - Ortoni Report
   - Allure Report
   - HTML Report
-- CSV-based selector management
+- **Centralized Selector Management** via CSV files
 - Environment-based configuration
+- Docker support
 - CI/CD ready
+- TypeScript support
 
-# Playwright Project Template
+## Project Structure
 
-## Setup
+```plaintext
+playwright-project-template/
+├── docs/                   # Documentation
+│   └── SELECTOR_SYSTEM.md  # Selector system documentation
+├── env/                    # Environment configuration files
+│   ├── dev.env
+│   ├── stage.env
+│   └── prod.env
+├── fixtures/               # Test data and fixtures
+│   ├── dev.json
+│   ├── stage.json
+│   └── prod.json
+├── pages/                  # Page Object Models
+│   ├── base.page.ts
+│   ├── login/
+│   ├── deals/
+│   ├── adminpanel/
+│   └── budgets/
+├── tests/                  # Test files
+│   ├── e2e/
+│   └── setup/
+├── utils/                  # Utilities and helpers
+│   ├── selectors.csv       # Centralized selectors
+│   ├── selectors.ts        # Selector utilities
+│   └── env.ts
+├── docker-compose.yml      # Docker configuration
+├── Dockerfile              # Docker image
+└── playwright.config.ts    # Playwright configuration
+```
 
-### Prerequisites
+## Quick Start
+
+### Option 1: Local Setup
+
+#### Prerequisites
 
 - Node.js (v14 or higher)
 - npm (v6 or higher)
 - Java Runtime Environment (for Allure reporting)
 
-### Project Setup
+#### Installation
 
 1. Clone the repository:
-
 ```bash
 git clone https://github.com/is-raihan/playwright-project-template.git
 cd playwright-project-template
 ```
 
-1. Install dependencies:
-
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-1. Install Playwright browsers:
-
+3. Install Playwright browsers:
 ```bash
 npx playwright install
 ```
 
-1. Install Allure command-line tool:
-
+4. Install Allure command-line tool:
 ```bash
 npm install -g allure-commandline
 ```
 
-## Test Structure
+### Option 2: Docker Setup
 
-```plaintext
-tests/
-├── e2e/                    # End-to-end test files
-├── fixtures/               # Test fixtures and data
-└── utils/                  # Helper functions and utilities
+#### Prerequisites
+
+- Docker
+- Docker Compose
+
+#### Quick Start with Docker
+
+1. Clone the repository:
+```bash
+git clone https://github.com/is-raihan/playwright-project-template.git
+cd playwright-project-template
 ```
+
+2. Run tests using Docker:
+```bash
+# Run all tests
+docker-compose up --build
+
+# Run tests in headed mode
+docker-compose -f docker-compose.yml -f docker-compose.headed.yml up --build
+
+# Run specific test file
+docker-compose run --rm playwright npx playwright test tests/e2e/example.spec.ts
+```
+
+## Selector Management System
+
+This project uses a centralized selector management system that stores all selectors in CSV files for easy maintenance and updates.
+
+### Key Features
+
+- **Centralized Storage**: All selectors stored in `utils/selectors.csv`
+- **Type Safety**: TypeScript ensures correct selector keys
+- **Easy Maintenance**: Update selectors without touching page objects
+- **Documentation**: Comments provide context for each selector
+
+### Usage Example
+
+```typescript
+import { getSelector, SelectorKeys } from '../../utils/selectors';
+
+export class LoginPage extends BasePage {
+  readonly usernameInput: Locator;
+  readonly passwordInput: Locator;
+  readonly loginButton: Locator;
+
+  constructor(page: Page) {
+    super(page);
+    
+    // Use selectors from CSV file
+    this.usernameInput = page.locator(getSelector(SelectorKeys.USERNAME_INPUT));
+    this.passwordInput = page.locator(getSelector(SelectorKeys.PASSWORD_INPUT));
+    this.loginButton = page.locator(getSelector(SelectorKeys.LOGIN_BUTTON));
+  }
+}
+```
+
+### Adding New Selectors
+
+1. Add to `utils/selectors.csv`:
+```csv
+newElementKey,#new-element-id,button,New element description
+```
+
+2. Add to `utils/selectors.ts`:
+```typescript
+export const SelectorKeys = {
+  // ... existing keys
+  NEW_ELEMENT_KEY: 'newElementKey'
+} as const;
+```
+
+3. Use in page object:
+```typescript
+this.newElement = page.locator(getSelector(SelectorKeys.NEW_ELEMENT_KEY));
+```
+
+For detailed documentation, see [docs/SELECTOR_SYSTEM.md](docs/SELECTOR_SYSTEM.md).
 
 ## Running Tests
 
 ### Basic Test Commands
 
-- Run all tests:
-
 ```bash
+# Run all tests
 npm test
-```
 
-- Run tests in headed mode:
-
-```bash
+# Run tests in headed mode (visible browser)
 npm run test:headed
-```
 
-- Run tests in UI mode:
-
-```bash
+# Run tests in UI mode
 npm run test:ui
+
+# Run tests in debug mode
+npm run test:debug
 ```
 
 ### Environment-specific Tests
 
-- Development environment:
-
 ```bash
+# Development environment
 npm run test:dev
-```
 
-- Staging environment:
-
-```bash
+# Staging environment
 npm run test:stage
-```
 
-- Production environment:
-
-```bash
+# Production environment
 npm run test:prod
 ```
 
 ### Browser-specific Tests
 
-- Run tests in Chromium:
+```bash
+# Run tests in Chromium only
+npm run test:chromium
+
+# Run tests in specific browsers
+npx playwright test --project=firefox
+npx playwright test --project=webkit
+```
+
+### Docker Commands
 
 ```bash
-npm run test:chromium
+# Run all tests in Docker
+docker-compose up --build
+
+# Run tests in headed mode with Docker
+docker-compose -f docker-compose.yml -f docker-compose.headed.yml up --build
+
+# Run specific test file
+docker-compose run --rm playwright npx playwright test tests/e2e/example.spec.ts
+
+# Run tests with specific environment
+docker-compose run --rm -e NODE_ENV=stage playwright npm run test:stage
 ```
 
 ## Reporting
 
 ### Ortoni Report
 
-- Run tests with Ortoni reporting:
+Reports are automatically generated in `report-db/index.html` and served at `http://localhost:2004`.
 
 ```bash
-npm run test:dev
+# View Ortoni report
+npm run test:report
 ```
-
-Reports are generated in `report-db/index.html`
 
 ### Allure Report
 
-- Run tests with Allure reporting:
-
 ```bash
+# Run tests with Allure reporting
 npm run test:with-allure
-```
 
-- Generate and view Allure report:
-
-```bash
+# Generate and view Allure report
 npm run allure:generate
 npm run allure:serve
-```
 
-- Clear Allure results:
-
-```bash
+# Clear Allure results
 npm run allure:clear
 ```
 
-Headless execution is supported for all browsers on all platforms. Check out [system requirements](https://playwright.dev/docs/intro#system-requirements) for details.
+### Docker Reporting
 
-Looking for Playwright for [Python](https://playwright.dev/python/docs/intro), [.NET](https://playwright.dev/dotnet/docs/intro), or [Java](https://playwright.dev/java/docs/intro)?
+```bash
+# Run tests and generate reports in Docker
+docker-compose up --build
 
-## Installation
-
-Playwright has its own test runner for end-to-end tests, we call it Playwright Test.
-
-### Using init command
-
-The easiest way to get started with Playwright Test is to run the init command.
-
-```Shell
-# Run from your project's root directory
-npm init playwright@latest
-# Or create a new project
-npm init playwright@latest new-project
+# View reports (after tests complete)
+open report-db/index.html
 ```
 
-This will create a configuration file, optionally add examples, a GitHub Action workflow and a first test example.spec.ts. You can now jump directly to writing assertions section.
+## Environment Configuration
 
-### Manually
+The project supports multiple environments through configuration files:
 
-Add dependency and install browsers.
+- `env/dev.env` - Development environment
+- `env/stage.env` - Staging environment  
+- `env/prod.env` - Production environment
 
-```Shell
-npm i -D @playwright/test
-# install supported browsers
-npx playwright install
+### Environment Variables
+
+```bash
+BASE_URL=https://demo.playwright.dev
+HOME_URL=https://demo.playwright.dev
+NODE_ENV=dev
 ```
 
-You can optionally install only selected browsers, see [install browsers](https://playwright.dev/docs/cli#install-browsers) for more details. Or you can install no browsers at all and use existing [browser channels](https://playwright.dev/docs/browsers).
+## Test Structure
 
-- [Getting started](https://playwright.dev/docs/intro)
-- [API reference](https://playwright.dev/docs/api/class-playwright)
+### Page Object Model
 
-## Capabilities
+The project uses the Page Object Model pattern for maintainable tests:
 
-### Resilient • No flaky tests
+```typescript
+// pages/login/login.page.ts
+export class LoginPage extends BasePage {
+  // Page elements and methods
+}
 
-**Auto-wait**. Playwright waits for elements to be actionable prior to performing actions. It also has a rich set of introspection events. The combination of the two eliminates the need for artificial timeouts - a primary cause of flaky tests.
-
-**Web-first assertions**. Playwright assertions are created specifically for the dynamic web. Checks are automatically retried until the necessary conditions are met.
-
-**Tracing**. Configure test retry strategy, capture execution trace, videos and screenshots to eliminate flakes.
-
-### No trade-offs • No limits
-
-Browsers run web content belonging to different origins in different processes. Playwright is aligned with the architecture of the modern browsers and runs tests out-of-process. This makes Playwright free of the typical in-process test runner limitations.
-
-**Multiple everything**. Test scenarios that span multiple tabs, multiple origins and multiple users. Create scenarios with different contexts for different users and run them against your server, all in one test.
-
-**Trusted events**. Hover elements, interact with dynamic controls and produce trusted events. Playwright uses real browser input pipeline indistinguishable from the real user.
-
-Test frames, pierce Shadow DOM. Playwright selectors pierce shadow DOM and allow entering frames seamlessly.
-
-### Full isolation • Fast execution
-
-**Browser contexts**. Playwright creates a browser context for each test. Browser context is equivalent to a brand new browser profile. This delivers full test isolation with zero overhead. Creating a new browser context only takes a handful of milliseconds.
-
-**Log in once**. Save the authentication state of the context and reuse it in all the tests. This bypasses repetitive log-in operations in each test, yet delivers full isolation of independent tests.
-
-### Powerful Tooling
-
-**[Codegen](https://playwright.dev/docs/codegen)**. Generate tests by recording your actions. Save them into any language.
-
-**[Playwright inspector](https://playwright.dev/docs/inspector)**. Inspect page, generate selectors, step through the test execution, see click points and explore execution logs.
-
-**[Trace Viewer](https://playwright.dev/docs/trace-viewer)**. Capture all the information to investigate the test failure. Playwright trace contains test execution screencast, live DOM snapshots, action explorer, test source and many more.
-
-Looking for Playwright for [TypeScript](https://playwright.dev/docs/intro), [JavaScript](https://playwright.dev/docs/intro), [Python](https://playwright.dev/python/docs/intro), [.NET](https://playwright.dev/dotnet/docs/intro), or [Java](https://playwright.dev/java/docs/intro)?
-
-## Examples
-
-To learn how to run these Playwright Test examples, check out our [getting started docs](https://playwright.dev/docs/intro).
-
-### Page screenshot
-
-This code snippet navigates to Playwright homepage and saves a screenshot.
-
-```TypeScript
-import { test } from '@playwright/test';
-
-test('Page Screenshot', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-  await page.screenshot({ path: `example.png` });
+// tests/e2e/login.spec.ts
+test('should login successfully', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  await loginPage.login();
 });
 ```
 
-#### Mobile and geolocation
+### Test Organization
 
-This snippet emulates Mobile Safari on a device at given geolocation, navigates to maps.google.com, performs the action and takes a screenshot.
-
-```TypeScript
-import { test, devices } from '@playwright/test';
-
-test.use({
-  ...devices['iPhone 13 Pro'],
-  locale: 'en-US',
-  geolocation: { longitude: 12.492507, latitude: 41.889938 },
-  permissions: ['geolocation'],
-})
-
-test('Mobile and geolocation', async ({ page }) => {
-  await page.goto('https://maps.google.com');
-  await page.getByText('Your location').click();
-  await page.waitForRequest(/.*preview\/pwa/);
-  await page.screenshot({ path: 'colosseum-iphone.png' });
-});
+```plaintext
+tests/
+├── e2e/                    # End-to-end test files
+│   ├── example.spec.ts     # Basic example tests
+│   ├── selector-test.spec.ts # Selector system tests
+│   ├── deals/              # Deal-related tests
+│   └── adminpanel/         # Admin panel tests
+├── setup/                  # Test setup files
+│   └── auth.setup.ts       # Authentication setup
+└── fixtures/               # Test data
 ```
 
-#### Evaluate in browser context
+## Docker Configuration
 
-This code snippet navigates to example.com, and executes a script in the page context.
+### Dockerfile
 
-```TypeScript
-import { test } from '@playwright/test';
+The project includes a multi-stage Dockerfile optimized for Playwright testing:
 
-test('Evaluate in browser context', async ({ page }) => {
-  await page.goto('https://www.example.com/');
-  const dimensions = await page.evaluate(() => {
-    return {
-      width: document.documentElement.clientWidth,
-      height: document.documentElement.clientHeight,
-      deviceScaleFactor: window.devicePixelRatio
-    }
-  });
-  console.log(dimensions);
-});
+```dockerfile
+FROM mcr.microsoft.com/playwright:v1.54.1-focal
+
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npx playwright install --with-deps
+
+CMD ["npm", "test"]
 ```
 
-#### Intercept network requests
+### Docker Compose
 
-This code snippet sets up request routing for a page to log all network requests.
-
-```TypeScript
-import { test } from '@playwright/test';
-
-test('Intercept network requests', async ({ page }) => {
-  // Log and continue all network requests
-  await page.route('**', route => {
-    console.log(route.request().url());
-    route.continue();
-  });
-  await page.goto('http://todomvc.com');
-});
+```yaml
+version: '3.8'
+services:
+  playwright:
+    build: .
+    volumes:
+      - ./test-results:/app/test-results
+      - ./report-db:/app/report-db
+      - ./allure-results:/app/allure-results
+    environment:
+      - NODE_ENV=dev
 ```
+
+## CI/CD Integration
+
+### GitHub Actions
+
+The project includes GitHub Actions workflows for automated testing:
+
+```yaml
+name: Playwright Tests
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - run: npm ci
+      - run: npx playwright install --with-deps
+      - run: npm test
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Selector not found**: Check `utils/selectors.csv` and ensure the key exists
+2. **Browser installation issues**: Run `npx playwright install --with-deps`
+3. **Docker permission issues**: Use `sudo` or add user to docker group
+4. **Allure report not generating**: Ensure Java is installed
+
+### Debug Mode
+
+```bash
+# Run tests in debug mode
+npm run test:debug
+
+# Run with Playwright Inspector
+npm run test:debug:ui
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Add your selectors to `utils/selectors.csv`
+4. Update `utils/selectors.ts` with new keys
+5. Write tests using the selector system
+6. Submit a pull request
 
 ## Resources
 
-- [Documentation](https://playwright.dev)
-- [API reference](https://playwright.dev/docs/api/class-playwright/)
-- [Contribution guide](CONTRIBUTING.md)
-- [Changelog](https://github.com/microsoft/playwright/releases)
+- [Playwright Documentation](https://playwright.dev)
+- [Selector System Documentation](docs/SELECTOR_SYSTEM.md)
+- [Docker Documentation](https://docs.docker.com/)
+- [Allure Framework](https://docs.qameta.io/allure/)
+
+## License
+
+This project is licensed under the ISC License.

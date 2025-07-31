@@ -49,25 +49,25 @@
         <li>Provide a snippet of code with the fix, if possible.</li>
       </ul>
       <h1>Error Details</h1>
-      <pre><code><span style="color:#A00">Test timeout of 30000ms exceeded.<span style="color:var(--snippet-color)"></span></span></code></pre>
-<pre><code>Error: locator.click: Test timeout of 30000ms exceeded.
-Call log:
-  - waiting for getByRole(&#039;listitem&#039;).filter({ hasText: &#039;Deals Dashboard Repository&#039; }).locator(&#039;span&#039;)<span style="font-weight:normal;text-decoration:none;font-style:normal">
+      <pre><code>Error: <span style="color:#A00">Timed out 5000ms waiting for <span style="color:var(--snippet-color)">expect(<span style="font-weight:normal;text-decoration:none;font-style:normal"><span style="color:#A00">page<span style="color:var(--snippet-color)">).<span style="font-weight:normal;text-decoration:none;font-style:normal">toHaveTitle(<span style="font-weight:normal;text-decoration:none;font-style:normal"><span style="color:#0A0">expected<span style="color:var(--snippet-color)">)<span style="font-weight:normal;text-decoration:none;font-style:normal">
 
-    at DealsPage.CreateNewDeal (/home/k/workspace/Testing/playwright-project-template/pages/deals/deals.page.ts:42:30)
-    at /home/k/workspace/Testing/playwright-project-template/tests/e2e/deals/createNewDeal.spec.ts:14:29</span></code></pre>
+Expected pattern: <span style="color:#0A0">/Playwright/<span style="color:var(--snippet-color)">
+Received string:  <span style="color:#A00">&quot;homepage · GitHub&quot;<span style="color:var(--snippet-color)">
+Call log:
+  - Expect &quot;toHaveTitle&quot; with timeout 5000ms<span style="font-weight:normal;text-decoration:none;font-style:normal">
+    9 × unexpected value &quot;homepage · GitHub&quot;<span style="font-weight:normal;text-decoration:none;font-style:normal">
+
+    at /app/tests/e2e/deals/createNewDeal.spec.ts:18:24</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></pre>
       
       <div>
-        <pre><code><span style="color:#555">   at <span style="color:var(--snippet-color)">../../pages/deals/deals.page.ts:42
-
-</span></span> <span style="color:#555"> 40 |<span style="color:var(--snippet-color)">   }
- <span style="color:#555"> 41 |<span style="color:var(--snippet-color)">   <span style="color:#0AA">async<span style="color:var(--snippet-color)"> <span style="color:#A50">CreateNewDeal<span style="color:var(--snippet-color)">(){
-<span style="color:#A00"><b>><span style="font-weight:normal;text-decoration:none;font-style:normal"><span style="color:var(--snippet-color)"><span style="color:#555"> 42 |<span style="color:var(--snippet-color)">     <span style="color:#0AA">await<span style="color:var(--snippet-color)"> <span style="color:#0AA">this<span style="color:var(--snippet-color)"><span style="color:#A50">.<span style="color:var(--snippet-color)">dealsMenuItem<span style="color:#A50">.<span style="color:var(--snippet-color)">click()<span style="color:#A50">;<span style="color:var(--snippet-color)">
- <span style="color:#555">    |<span style="color:var(--snippet-color)">                              <span style="color:#A00"><b>^<span style="font-weight:normal;text-decoration:none;font-style:normal"><span style="color:var(--snippet-color)">
- <span style="color:#555"> 43 |<span style="color:var(--snippet-color)">     <span style="color:#0AA">await<span style="color:var(--snippet-color)"> <span style="color:#0AA">this<span style="color:var(--snippet-color)"><span style="color:#A50">.<span style="color:var(--snippet-color)">dealsrepositorySubmenu<span style="color:#A50">.<span style="color:var(--snippet-color)">click()<span style="color:#A50">;<span style="color:var(--snippet-color)">
- <span style="color:#555"> 44 |<span style="color:var(--snippet-color)">     <span style="color:#0AA">await<span style="color:var(--snippet-color)"> <span style="color:#0AA">this<span style="color:var(--snippet-color)"><span style="color:#A50">.<span style="color:var(--snippet-color)">createDeal<span style="color:#A50">.<span style="color:var(--snippet-color)">click()<span style="color:#A50">;<span style="color:var(--snippet-color)">
- <span style="color:#555"> 45 |<span style="color:var(--snippet-color)">     <span style="color:#0AA">await<span style="color:var(--snippet-color)"> <span style="color:#0AA">this<span style="color:var(--snippet-color)"><span style="color:#A50">.<span style="color:var(--snippet-color)"><span style="color:#A50">RoamingPartner<span style="color:var(--snippet-color)"><span style="color:#A50">.<span style="color:var(--snippet-color)">click()<span style="color:#A50">;<span style="color:var(--snippet-color)"></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></b></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></b></span></span></span></span></span></span></span></span></span></code></pre>
-        <p><em>Location: ../../pages/deals/deals.page.ts:42:30</em></p>
+        <pre><code> <span style="color:#555"> 16 |<span style="color:var(--snippet-color)">     
+ <span style="color:#555"> 17 |<span style="color:var(--snippet-color)">     <span style="color:#555">// For demo purposes, let&#039;s just verify the page loads correctly<span style="color:var(--snippet-color)">
+<span style="color:#A00"><b>><span style="font-weight:normal;text-decoration:none;font-style:normal"><span style="color:var(--snippet-color)"><span style="color:#555"> 18 |<span style="color:var(--snippet-color)">     <span style="color:#0AA">await<span style="color:var(--snippet-color)"> expect(page)<span style="color:#A50">.<span style="color:var(--snippet-color)">toHaveTitle(<span style="color:#A0A">/Playwright/<span style="color:var(--snippet-color)">)<span style="color:#A50">;<span style="color:var(--snippet-color)">
+ <span style="color:#555">    |<span style="color:var(--snippet-color)">                        <span style="color:#A00"><b>^<span style="font-weight:normal;text-decoration:none;font-style:normal"><span style="color:var(--snippet-color)">
+ <span style="color:#555"> 19 |<span style="color:var(--snippet-color)">     
+ <span style="color:#555"> 20 |<span style="color:var(--snippet-color)">     <span style="color:#555">// Create new deal (commented out for now since it&#039;s not a real app)<span style="color:var(--snippet-color)">
+ <span style="color:#555"> 21 |<span style="color:var(--snippet-color)">     <span style="color:#555">// await app.dealsPage.CreateNewDeal();<span style="color:var(--snippet-color)"></span></span></span></span></span></span></span></span></span></span></span></span></b></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></b></span></span></span></span></span></span></span></code></pre>
+        <p><em>Location: deals/createNewDeal.spec.ts:18:24</em></p>
       </div>
       <h1>Page snapshot</h1>
 <pre><code class="language-yaml">- link &quot;Skip to content&quot;:

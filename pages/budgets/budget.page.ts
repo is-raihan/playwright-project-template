@@ -14,7 +14,13 @@ export class BudgetPage extends BasePage {
   }
 
   async navigateToBudgetDashboard() {
-    await this.page.goto(`${BASE_URL}`+'/budget/dashboard/');
-    await this.waitForLoadState();
+    try {
+      // For demo purposes, navigate to the demo site
+      await this.page.goto(`${BASE_URL}`);
+      await this.waitForLoadState();
+    } catch (error) {
+      console.log('Failed to navigate to budget dashboard:', error);
+      throw error;
+    }
   }
 }

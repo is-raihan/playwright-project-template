@@ -42,7 +42,7 @@
     "@faker-js/faker": "^9.8.0",
     "@playwright/mcp": "^0.0.25",
     "allure-playwright": "^3.2.2",
-    "playwright_js": "file:",
+    "playwright_js": "^1.0.0",
     "playwright-lighthouse": "^4.0.0",
     "playwright-mail-reporter": "^0.0.8",
     "typescript": "^5.8.3"

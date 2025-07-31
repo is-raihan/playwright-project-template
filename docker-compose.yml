@@ -1,0 +1,69 @@
+version: "3.8"
+
+services:
+  playwright:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: playwright-tests
+    volumes:
+      # Mount test results and reports
+      - ./test-results:/app/test-results
+      - ./report-db:/app/report-db
+      - ./allure-results:/app/allure-results
+      # Mount environment files
+      - ./env:/app/env
+      - ./fixtures:/app/fixtures
+    environment:
+      - NODE_ENV=dev
+      - CI=true
+    ports:
+      # Expose report ports
+      - "2004:2004" # Ortoni report
+      - "55125:55125" # Allure report
+    networks:
+      - playwright-network
+    # Run tests and keep container running for report viewing
+    command: >
+      sh -c "
+        npm test &&
+        echo 'Tests completed. Reports available at:' &&
+        echo '- Ortoni Report: http://localhost:2004' &&
+        echo '- Allure Report: http://localhost:55125' &&
+        echo 'Press Ctrl+C to stop the container' &&
+        tail -f /dev/null
+      "
+    shm_size: "2gb"
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 2G
+
+  # Service for running tests in headed mode
+  playwright-headed:
+    build: .
+    container_name: playwright-tests-headed
+    volumes:
+      - ./test-results:/app/test-results
+      - ./report-db:/app/report-db
+      - ./allure-results:/app/allure-results
+      - ./env:/app/env
+      - ./fixtures:/app/fixtures
+      # Mount X11 for headed mode (Linux only)
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    environment:
+      - NODE_ENV=dev
+      - CI=false
+      - DISPLAY=${DISPLAY}
+    ports:
+      - "2004:2004"
+      - "55125:55125"
+    networks:
+      - playwright-network
+    command: npm run test:headed
+
+networks:
+  playwright-network:
+    driver: bridge
