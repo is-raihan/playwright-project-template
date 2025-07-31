@@ -15,12 +15,12 @@ test.describe('Deals to Budget Flow', () => {
     const app = new AppPages(page);
 
     // For demo purposes, let's just verify the page loads correctly
-    await expect(page).toHaveTitle(/Playwright/);
-    
+    await expect(page).toHaveTitle(/GitHub/);
+
     // Navigate to deals repository (commented out for now since it's not a real app)
     // await app.dealsPage.navigateToDealsRepository();
   });
-  
+
   test.skip('Navigate from Deals dashboard', async ({ page }) => {
     const app = new AppPages(page);
     // Open deal in new tab
