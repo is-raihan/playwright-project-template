@@ -1,0 +1,638 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <title>Ortoni Error Report</title>
+      <style>
+        body { font-family: sans-serif; padding: 2rem; line-height: 1.6; max-width: 900px; margin: auto; }
+        code, pre { background: #f4f4f4; padding: 0.5rem; border-radius: 5px; display: block; overflow-x: auto; }
+        h1, h2, h3 { color: #444; }
+        hr { margin: 2em 0; }
+        #copyBtn {
+          background-color: #007acc;
+          color: white;
+          border: none;
+          padding: 0.5rem 1rem;
+          margin-bottom: 1rem;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+        #copyBtn:hover {
+          background-color: #005fa3;
+        }
+      </style>
+    </head>
+    <body>
+      <button id="copyBtn">📋 Copy All</button>
+      <script>
+        document.getElementById("copyBtn").addEventListener("click", () => {
+          const content = document.getElementById("markdownContent").innerText;
+          navigator.clipboard.writeText(content).then(() => {
+            // change button text to indicate success
+            const button = document.getElementById("copyBtn");
+            button.textContent = "✅ Copied!";
+            setTimeout(() => {
+              button.textContent = "📋 Copy All"
+              }, 2000);
+          }).catch(err => {
+            console.error("Failed to copy text: ", err);
+            alert("Failed to copy text. Please try manually.");   
+          });
+        });
+      </script>
+      <div id="markdownContent">
+      <h1>Instructions</h1>
+      <ul>
+        <li>Following Playwright test failed.</li>
+        <li>Explain why, be concise, respect Playwright best practices.</li>
+        <li>Provide a snippet of code with the fix, if possible.</li>
+      </ul>
+      <h1>Error Details</h1>
+      <pre><code>Error: <span style="color:#A00">Timed out 5000ms waiting for <span style="color:var(--snippet-color)">expect(<span style="font-weight:normal;text-decoration:none;font-style:normal"><span style="color:#A00">page<span style="color:var(--snippet-color)">).<span style="font-weight:normal;text-decoration:none;font-style:normal">toHaveTitle(<span style="font-weight:normal;text-decoration:none;font-style:normal"><span style="color:#0A0">expected<span style="color:var(--snippet-color)">)<span style="font-weight:normal;text-decoration:none;font-style:normal">
+
+Expected pattern: <span style="color:#0A0">/Playwright/<span style="color:var(--snippet-color)">
+Received string:  <span style="color:#A00">&quot;homepage · GitHub&quot;<span style="color:var(--snippet-color)">
+Call log:
+  - Expect &quot;toHaveTitle&quot; with timeout 5000ms<span style="font-weight:normal;text-decoration:none;font-style:normal">
+    9 × unexpected value &quot;homepage · GitHub&quot;<span style="font-weight:normal;text-decoration:none;font-style:normal">
+
+    at /app/tests/e2e/deals/createNewDeal.spec.ts:18:24</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></pre>
+      
+      <div>
+        <pre><code> <span style="color:#555"> 16 |<span style="color:var(--snippet-color)">     
+ <span style="color:#555"> 17 |<span style="color:var(--snippet-color)">     <span style="color:#555">// For demo purposes, let&#039;s just verify the page loads correctly<span style="color:var(--snippet-color)">
+<span style="color:#A00"><b>><span style="font-weight:normal;text-decoration:none;font-style:normal"><span style="color:var(--snippet-color)"><span style="color:#555"> 18 |<span style="color:var(--snippet-color)">     <span style="color:#0AA">await<span style="color:var(--snippet-color)"> expect(page)<span style="color:#A50">.<span style="color:var(--snippet-color)">toHaveTitle(<span style="color:#A0A">/Playwright/<span style="color:var(--snippet-color)">)<span style="color:#A50">;<span style="color:var(--snippet-color)">
+ <span style="color:#555">    |<span style="color:var(--snippet-color)">                        <span style="color:#A00"><b>^<span style="font-weight:normal;text-decoration:none;font-style:normal"><span style="color:var(--snippet-color)">
+ <span style="color:#555"> 19 |<span style="color:var(--snippet-color)">     
+ <span style="color:#555"> 20 |<span style="color:var(--snippet-color)">     <span style="color:#555">// Create new deal (commented out for now since it&#039;s not a real app)<span style="color:var(--snippet-color)">
+ <span style="color:#555"> 21 |<span style="color:var(--snippet-color)">     <span style="color:#555">// await app.dealsPage.CreateNewDeal();<span style="color:var(--snippet-color)"></span></span></span></span></span></span></span></span></span></span></span></span></b></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></b></span></span></span></span></span></span></span></code></pre>
+        <p><em>Location: deals/createNewDeal.spec.ts:18:24</em></p>
+      </div>
+      <h1>Page snapshot</h1>
+<pre><code class="language-yaml">- link &quot;Skip to content&quot;:
+  - /url: &quot;#start-of-content&quot;
+- banner:
+  - heading &quot;Navigation Menu&quot; [level=2]
+  - link &quot;Homepage&quot;:
+    - /url: /
+  - navigation &quot;Global&quot;:
+    - list:
+      - listitem:
+        - button &quot;Product&quot;
+      - listitem:
+        - button &quot;Solutions&quot;
+      - listitem:
+        - button &quot;Resources&quot;
+      - listitem:
+        - button &quot;Open Source&quot;
+      - listitem:
+        - button &quot;Enterprise&quot;
+      - listitem:
+        - link &quot;Pricing&quot;:
+          - /url: https://github.com/pricing
+  - button &quot;Search or jump to…&quot;
+  - link &quot;Sign in&quot;:
+    - /url: /login?return_to=https%3A%2F%2Fgithub.com%2Fhomepage%2F
+  - link &quot;Sign up&quot;:
+    - /url: /signup?ref_cta=Sign+up&amp;ref_loc=header+logged+out&amp;ref_page=%2F%3Cuser-name%3E&amp;source=header
+  - button &quot;Appearance settings&quot;
+- main:
+  - img &quot;@homepage&quot;
+  - strong: homepage
+  - link &quot;Follow&quot;:
+    - /url: /login?return_to=https%3A%2F%2Fgithub.com%2Fhomepage%2F
+  - navigation &quot;User profile&quot;:
+    - link &quot;Overview&quot;:
+      - /url: /homepage
+    - link &quot;Repositories&quot;:
+      - /url: /homepage?tab=repositories
+    - link &quot;Projects&quot;:
+      - /url: /homepage?tab=projects
+    - link &quot;Packages&quot;:
+      - /url: /homepage?tab=packages
+    - link &quot;Stars&quot;:
+      - /url: /homepage?tab=stars
+  - img &quot;@homepage&quot;
+  - strong: homepage
+  - link &quot;Follow&quot;:
+    - /url: /login?return_to=https%3A%2F%2Fgithub.com%2Fhomepage%2F
+  - link &quot;View homepage&#39;s full-sized avatar&quot;:
+    - /url: https://avatars.githubusercontent.com/u/5253904?v=4
+    - img &quot;View homepage&#39;s full-sized avatar&quot;
+  - heading &quot;homepage&quot; [level=1]
+  - link &quot;Follow&quot;:
+    - /url: /login?return_to=https%3A%2F%2Fgithub.com%2Fhomepage%2F
+  - link &quot;7 followers&quot;:
+    - /url: https://github.com/homepage?tab=followers
+  - text: ·
+  - link &quot;0 following&quot;:
+    - /url: https://github.com/homepage?tab=following
+  - list
+  - button &quot;Block or Report&quot;
+  - heading &quot;Popular repositories Loading&quot; [level=2]:
+    - text: Popular repositories Loading
+    - status
+  - heading &quot;homepage doesn&#39;t have any public repositories yet.&quot; [level=2]
+  - heading &quot;0 contributions in the last year&quot; [level=2]
+  - link &quot;Skip to contributions year list&quot;:
+    - /url: &quot;#year-link-2025&quot;
+  - grid &quot;Contribution Graph&quot;:
+    - caption: Contribution Graph
+    - rowgroup:
+      - row &quot;Day of Week August September October November December January February March April May June July&quot;:
+        - gridcell &quot;Day of Week&quot;
+        - gridcell &quot;August&quot;
+        - gridcell &quot;September&quot;
+        - gridcell &quot;October&quot;
+        - gridcell &quot;November&quot;
+        - gridcell &quot;December&quot;
+        - gridcell &quot;January&quot;
+        - gridcell &quot;February&quot;
+        - gridcell &quot;March&quot;
+        - gridcell &quot;April&quot;
+        - gridcell &quot;May&quot;
+        - gridcell &quot;June&quot;
+        - gridcell &quot;July&quot;
+    - rowgroup:
+      - row:
+        - gridcell &quot;Sunday&quot;
+        - gridcell &quot;No contributions on July 28th.&quot;
+        - gridcell &quot;No contributions on August 4th.&quot;
+        - gridcell &quot;No contributions on August 11th.&quot;
+        - gridcell &quot;No contributions on August 18th.&quot;
+        - gridcell &quot;No contributions on August 25th.&quot;
+        - gridcell &quot;No contributions on September 1st.&quot;
+        - gridcell &quot;No contributions on September 8th.&quot;
+        - gridcell &quot;No contributions on September 15th.&quot;
+        - gridcell &quot;No contributions on September 22nd.&quot;
+        - gridcell &quot;No contributions on September 29th.&quot;
+        - gridcell &quot;No contributions on October 6th.&quot;
+        - gridcell &quot;No contributions on October 13th.&quot;
+        - gridcell &quot;No contributions on October 20th.&quot;
+        - gridcell &quot;No contributions on October 27th.&quot;
+        - gridcell &quot;No contributions on November 3rd.&quot;
+        - gridcell &quot;No contributions on November 10th.&quot;
+        - gridcell &quot;No contributions on November 17th.&quot;
+        - gridcell &quot;No contributions on November 24th.&quot;
+        - gridcell &quot;No contributions on December 1st.&quot;
+        - gridcell &quot;No contributions on December 8th.&quot;
+        - gridcell &quot;No contributions on December 15th.&quot;
+        - gridcell &quot;No contributions on December 22nd.&quot;
+        - gridcell &quot;No contributions on December 29th.&quot;
+        - gridcell &quot;No contributions on January 5th.&quot;
+        - gridcell &quot;No contributions on January 12th.&quot;
+        - gridcell &quot;No contributions on January 19th.&quot;
+        - gridcell &quot;No contributions on January 26th.&quot;
+        - gridcell &quot;No contributions on February 2nd.&quot;
+        - gridcell &quot;No contributions on February 9th.&quot;
+        - gridcell &quot;No contributions on February 16th.&quot;
+        - gridcell &quot;No contributions on February 23rd.&quot;
+        - gridcell &quot;No contributions on March 2nd.&quot;
+        - gridcell &quot;No contributions on March 9th.&quot;
+        - gridcell &quot;No contributions on March 16th.&quot;
+        - gridcell &quot;No contributions on March 23rd.&quot;
+        - gridcell &quot;No contributions on March 30th.&quot;
+        - gridcell &quot;No contributions on April 6th.&quot;
+        - gridcell &quot;No contributions on April 13th.&quot;
+        - gridcell &quot;No contributions on April 20th.&quot;
+        - gridcell &quot;No contributions on April 27th.&quot;
+        - gridcell &quot;No contributions on May 4th.&quot;
+        - gridcell &quot;No contributions on May 11th.&quot;
+        - gridcell &quot;No contributions on May 18th.&quot;
+        - gridcell &quot;No contributions on May 25th.&quot;
+        - gridcell &quot;No contributions on June 1st.&quot;
+        - gridcell &quot;No contributions on June 8th.&quot;
+        - gridcell &quot;No contributions on June 15th.&quot;
+        - gridcell &quot;No contributions on June 22nd.&quot;
+        - gridcell &quot;No contributions on June 29th.&quot;
+        - gridcell &quot;No contributions on July 6th.&quot;
+        - gridcell &quot;No contributions on July 13th.&quot;
+        - gridcell &quot;No contributions on July 20th.&quot;
+        - gridcell &quot;No contributions on July 27th.&quot;
+      - row:
+        - gridcell &quot;Monday&quot;
+        - gridcell &quot;No contributions on July 29th.&quot;
+        - gridcell &quot;No contributions on August 5th.&quot;
+        - gridcell &quot;No contributions on August 12th.&quot;
+        - gridcell &quot;No contributions on August 19th.&quot;
+        - gridcell &quot;No contributions on August 26th.&quot;
+        - gridcell &quot;No contributions on September 2nd.&quot;
+        - gridcell &quot;No contributions on September 9th.&quot;
+        - gridcell &quot;No contributions on September 16th.&quot;
+        - gridcell &quot;No contributions on September 23rd.&quot;
+        - gridcell &quot;No contributions on September 30th.&quot;
+        - gridcell &quot;No contributions on October 7th.&quot;
+        - gridcell &quot;No contributions on October 14th.&quot;
+        - gridcell &quot;No contributions on October 21st.&quot;
+        - gridcell &quot;No contributions on October 28th.&quot;
+        - gridcell &quot;No contributions on November 4th.&quot;
+        - gridcell &quot;No contributions on November 11th.&quot;
+        - gridcell &quot;No contributions on November 18th.&quot;
+        - gridcell &quot;No contributions on November 25th.&quot;
+        - gridcell &quot;No contributions on December 2nd.&quot;
+        - gridcell &quot;No contributions on December 9th.&quot;
+        - gridcell &quot;No contributions on December 16th.&quot;
+        - gridcell &quot;No contributions on December 23rd.&quot;
+        - gridcell &quot;No contributions on December 30th.&quot;
+        - gridcell &quot;No contributions on January 6th.&quot;
+        - gridcell &quot;No contributions on January 13th.&quot;
+        - gridcell &quot;No contributions on January 20th.&quot;
+        - gridcell &quot;No contributions on January 27th.&quot;
+        - gridcell &quot;No contributions on February 3rd.&quot;
+        - gridcell &quot;No contributions on February 10th.&quot;
+        - gridcell &quot;No contributions on February 17th.&quot;
+        - gridcell &quot;No contributions on February 24th.&quot;
+        - gridcell &quot;No contributions on March 3rd.&quot;
+        - gridcell &quot;No contributions on March 10th.&quot;
+        - gridcell &quot;No contributions on March 17th.&quot;
+        - gridcell &quot;No contributions on March 24th.&quot;
+        - gridcell &quot;No contributions on March 31st.&quot;
+        - gridcell &quot;No contributions on April 7th.&quot;
+        - gridcell &quot;No contributions on April 14th.&quot;
+        - gridcell &quot;No contributions on April 21st.&quot;
+        - gridcell &quot;No contributions on April 28th.&quot;
+        - gridcell &quot;No contributions on May 5th.&quot;
+        - gridcell &quot;No contributions on May 12th.&quot;
+        - gridcell &quot;No contributions on May 19th.&quot;
+        - gridcell &quot;No contributions on May 26th.&quot;
+        - gridcell &quot;No contributions on June 2nd.&quot;
+        - gridcell &quot;No contributions on June 9th.&quot;
+        - gridcell &quot;No contributions on June 16th.&quot;
+        - gridcell &quot;No contributions on June 23rd.&quot;
+        - gridcell &quot;No contributions on June 30th.&quot;
+        - gridcell &quot;No contributions on July 7th.&quot;
+        - gridcell &quot;No contributions on July 14th.&quot;
+        - gridcell &quot;No contributions on July 21st.&quot;
+        - gridcell &quot;No contributions on July 28th.&quot;
+      - row:
+        - gridcell &quot;Tuesday&quot;
+        - gridcell &quot;No contributions on July 30th.&quot;
+        - gridcell &quot;No contributions on August 6th.&quot;
+        - gridcell &quot;No contributions on August 13th.&quot;
+        - gridcell &quot;No contributions on August 20th.&quot;
+        - gridcell &quot;No contributions on August 27th.&quot;
+        - gridcell &quot;No contributions on September 3rd.&quot;
+        - gridcell &quot;No contributions on September 10th.&quot;
+        - gridcell &quot;No contributions on September 17th.&quot;
+        - gridcell &quot;No contributions on September 24th.&quot;
+        - gridcell &quot;No contributions on October 1st.&quot;
+        - gridcell &quot;No contributions on October 8th.&quot;
+        - gridcell &quot;No contributions on October 15th.&quot;
+        - gridcell &quot;No contributions on October 22nd.&quot;
+        - gridcell &quot;No contributions on October 29th.&quot;
+        - gridcell &quot;No contributions on November 5th.&quot;
+        - gridcell &quot;No contributions on November 12th.&quot;
+        - gridcell &quot;No contributions on November 19th.&quot;
+        - gridcell &quot;No contributions on November 26th.&quot;
+        - gridcell &quot;No contributions on December 3rd.&quot;
+        - gridcell &quot;No contributions on December 10th.&quot;
+        - gridcell &quot;No contributions on December 17th.&quot;
+        - gridcell &quot;No contributions on December 24th.&quot;
+        - gridcell &quot;No contributions on December 31st.&quot;
+        - gridcell &quot;No contributions on January 7th.&quot;
+        - gridcell &quot;No contributions on January 14th.&quot;
+        - gridcell &quot;No contributions on January 21st.&quot;
+        - gridcell &quot;No contributions on January 28th.&quot;
+        - gridcell &quot;No contributions on February 4th.&quot;
+        - gridcell &quot;No contributions on February 11th.&quot;
+        - gridcell &quot;No contributions on February 18th.&quot;
+        - gridcell &quot;No contributions on February 25th.&quot;
+        - gridcell &quot;No contributions on March 4th.&quot;
+        - gridcell &quot;No contributions on March 11th.&quot;
+        - gridcell &quot;No contributions on March 18th.&quot;
+        - gridcell &quot;No contributions on March 25th.&quot;
+        - gridcell &quot;No contributions on April 1st.&quot;
+        - gridcell &quot;No contributions on April 8th.&quot;
+        - gridcell &quot;No contributions on April 15th.&quot;
+        - gridcell &quot;No contributions on April 22nd.&quot;
+        - gridcell &quot;No contributions on April 29th.&quot;
+        - gridcell &quot;No contributions on May 6th.&quot;
+        - gridcell &quot;No contributions on May 13th.&quot;
+        - gridcell &quot;No contributions on May 20th.&quot;
+        - gridcell &quot;No contributions on May 27th.&quot;
+        - gridcell &quot;No contributions on June 3rd.&quot;
+        - gridcell &quot;No contributions on June 10th.&quot;
+        - gridcell &quot;No contributions on June 17th.&quot;
+        - gridcell &quot;No contributions on June 24th.&quot;
+        - gridcell &quot;No contributions on July 1st.&quot;
+        - gridcell &quot;No contributions on July 8th.&quot;
+        - gridcell &quot;No contributions on July 15th.&quot;
+        - gridcell &quot;No contributions on July 22nd.&quot;
+        - gridcell &quot;No contributions on July 29th.&quot;
+      - row:
+        - gridcell &quot;Wednesday&quot;
+        - gridcell &quot;No contributions on July 31st.&quot;
+        - gridcell &quot;No contributions on August 7th.&quot;
+        - gridcell &quot;No contributions on August 14th.&quot;
+        - gridcell &quot;No contributions on August 21st.&quot;
+        - gridcell &quot;No contributions on August 28th.&quot;
+        - gridcell &quot;No contributions on September 4th.&quot;
+        - gridcell &quot;No contributions on September 11th.&quot;
+        - gridcell &quot;No contributions on September 18th.&quot;
+        - gridcell &quot;No contributions on September 25th.&quot;
+        - gridcell &quot;No contributions on October 2nd.&quot;
+        - gridcell &quot;No contributions on October 9th.&quot;
+        - gridcell &quot;No contributions on October 16th.&quot;
+        - gridcell &quot;No contributions on October 23rd.&quot;
+        - gridcell &quot;No contributions on October 30th.&quot;
+        - gridcell &quot;No contributions on November 6th.&quot;
+        - gridcell &quot;No contributions on November 13th.&quot;
+        - gridcell &quot;No contributions on November 20th.&quot;
+        - gridcell &quot;No contributions on November 27th.&quot;
+        - gridcell &quot;No contributions on December 4th.&quot;
+        - gridcell &quot;No contributions on December 11th.&quot;
+        - gridcell &quot;No contributions on December 18th.&quot;
+        - gridcell &quot;No contributions on December 25th.&quot;
+        - gridcell &quot;No contributions on January 1st.&quot;
+        - gridcell &quot;No contributions on January 8th.&quot;
+        - gridcell &quot;No contributions on January 15th.&quot;
+        - gridcell &quot;No contributions on January 22nd.&quot;
+        - gridcell &quot;No contributions on January 29th.&quot;
+        - gridcell &quot;No contributions on February 5th.&quot;
+        - gridcell &quot;No contributions on February 12th.&quot;
+        - gridcell &quot;No contributions on February 19th.&quot;
+        - gridcell &quot;No contributions on February 26th.&quot;
+        - gridcell &quot;No contributions on March 5th.&quot;
+        - gridcell &quot;No contributions on March 12th.&quot;
+        - gridcell &quot;No contributions on March 19th.&quot;
+        - gridcell &quot;No contributions on March 26th.&quot;
+        - gridcell &quot;No contributions on April 2nd.&quot;
+        - gridcell &quot;No contributions on April 9th.&quot;
+        - gridcell &quot;No contributions on April 16th.&quot;
+        - gridcell &quot;No contributions on April 23rd.&quot;
+        - gridcell &quot;No contributions on April 30th.&quot;
+        - gridcell &quot;No contributions on May 7th.&quot;
+        - gridcell &quot;No contributions on May 14th.&quot;
+        - gridcell &quot;No contributions on May 21st.&quot;
+        - gridcell &quot;No contributions on May 28th.&quot;
+        - gridcell &quot;No contributions on June 4th.&quot;
+        - gridcell &quot;No contributions on June 11th.&quot;
+        - gridcell &quot;No contributions on June 18th.&quot;
+        - gridcell &quot;No contributions on June 25th.&quot;
+        - gridcell &quot;No contributions on July 2nd.&quot;
+        - gridcell &quot;No contributions on July 9th.&quot;
+        - gridcell &quot;No contributions on July 16th.&quot;
+        - gridcell &quot;No contributions on July 23rd.&quot;
+        - gridcell &quot;No contributions on July 30th.&quot;
+      - row:
+        - gridcell &quot;Thursday&quot;
+        - gridcell &quot;No contributions on August 1st.&quot;
+        - gridcell &quot;No contributions on August 8th.&quot;
+        - gridcell &quot;No contributions on August 15th.&quot;
+        - gridcell &quot;No contributions on August 22nd.&quot;
+        - gridcell &quot;No contributions on August 29th.&quot;
+        - gridcell &quot;No contributions on September 5th.&quot;
+        - gridcell &quot;No contributions on September 12th.&quot;
+        - gridcell &quot;No contributions on September 19th.&quot;
+        - gridcell &quot;No contributions on September 26th.&quot;
+        - gridcell &quot;No contributions on October 3rd.&quot;
+        - gridcell &quot;No contributions on October 10th.&quot;
+        - gridcell &quot;No contributions on October 17th.&quot;
+        - gridcell &quot;No contributions on October 24th.&quot;
+        - gridcell &quot;No contributions on October 31st.&quot;
+        - gridcell &quot;No contributions on November 7th.&quot;
+        - gridcell &quot;No contributions on November 14th.&quot;
+        - gridcell &quot;No contributions on November 21st.&quot;
+        - gridcell &quot;No contributions on November 28th.&quot;
+        - gridcell &quot;No contributions on December 5th.&quot;
+        - gridcell &quot;No contributions on December 12th.&quot;
+        - gridcell &quot;No contributions on December 19th.&quot;
+        - gridcell &quot;No contributions on December 26th.&quot;
+        - gridcell &quot;No contributions on January 2nd.&quot;
+        - gridcell &quot;No contributions on January 9th.&quot;
+        - gridcell &quot;No contributions on January 16th.&quot;
+        - gridcell &quot;No contributions on January 23rd.&quot;
+        - gridcell &quot;No contributions on January 30th.&quot;
+        - gridcell &quot;No contributions on February 6th.&quot;
+        - gridcell &quot;No contributions on February 13th.&quot;
+        - gridcell &quot;No contributions on February 20th.&quot;
+        - gridcell &quot;No contributions on February 27th.&quot;
+        - gridcell &quot;No contributions on March 6th.&quot;
+        - gridcell &quot;No contributions on March 13th.&quot;
+        - gridcell &quot;No contributions on March 20th.&quot;
+        - gridcell &quot;No contributions on March 27th.&quot;
+        - gridcell &quot;No contributions on April 3rd.&quot;
+        - gridcell &quot;No contributions on April 10th.&quot;
+        - gridcell &quot;No contributions on April 17th.&quot;
+        - gridcell &quot;No contributions on April 24th.&quot;
+        - gridcell &quot;No contributions on May 1st.&quot;
+        - gridcell &quot;No contributions on May 8th.&quot;
+        - gridcell &quot;No contributions on May 15th.&quot;
+        - gridcell &quot;No contributions on May 22nd.&quot;
+        - gridcell &quot;No contributions on May 29th.&quot;
+        - gridcell &quot;No contributions on June 5th.&quot;
+        - gridcell &quot;No contributions on June 12th.&quot;
+        - gridcell &quot;No contributions on June 19th.&quot;
+        - gridcell &quot;No contributions on June 26th.&quot;
+        - gridcell &quot;No contributions on July 3rd.&quot;
+        - gridcell &quot;No contributions on July 10th.&quot;
+        - gridcell &quot;No contributions on July 17th.&quot;
+        - gridcell &quot;No contributions on July 24th.&quot;
+        - gridcell &quot;No contributions on July 31st.&quot;
+      - row:
+        - gridcell &quot;Friday&quot;
+        - gridcell &quot;No contributions on August 2nd.&quot;
+        - gridcell &quot;No contributions on August 9th.&quot;
+        - gridcell &quot;No contributions on August 16th.&quot;
+        - gridcell &quot;No contributions on August 23rd.&quot;
+        - gridcell &quot;No contributions on August 30th.&quot;
+        - gridcell &quot;No contributions on September 6th.&quot;
+        - gridcell &quot;No contributions on September 13th.&quot;
+        - gridcell &quot;No contributions on September 20th.&quot;
+        - gridcell &quot;No contributions on September 27th.&quot;
+        - gridcell &quot;No contributions on October 4th.&quot;
+        - gridcell &quot;No contributions on October 11th.&quot;
+        - gridcell &quot;No contributions on October 18th.&quot;
+        - gridcell &quot;No contributions on October 25th.&quot;
+        - gridcell &quot;No contributions on November 1st.&quot;
+        - gridcell &quot;No contributions on November 8th.&quot;
+        - gridcell &quot;No contributions on November 15th.&quot;
+        - gridcell &quot;No contributions on November 22nd.&quot;
+        - gridcell &quot;No contributions on November 29th.&quot;
+        - gridcell &quot;No contributions on December 6th.&quot;
+        - gridcell &quot;No contributions on December 13th.&quot;
+        - gridcell &quot;No contributions on December 20th.&quot;
+        - gridcell &quot;No contributions on December 27th.&quot;
+        - gridcell &quot;No contributions on January 3rd.&quot;
+        - gridcell &quot;No contributions on January 10th.&quot;
+        - gridcell &quot;No contributions on January 17th.&quot;
+        - gridcell &quot;No contributions on January 24th.&quot;
+        - gridcell &quot;No contributions on January 31st.&quot;
+        - gridcell &quot;No contributions on February 7th.&quot;
+        - gridcell &quot;No contributions on February 14th.&quot;
+        - gridcell &quot;No contributions on February 21st.&quot;
+        - gridcell &quot;No contributions on February 28th.&quot;
+        - gridcell &quot;No contributions on March 7th.&quot;
+        - gridcell &quot;No contributions on March 14th.&quot;
+        - gridcell &quot;No contributions on March 21st.&quot;
+        - gridcell &quot;No contributions on March 28th.&quot;
+        - gridcell &quot;No contributions on April 4th.&quot;
+        - gridcell &quot;No contributions on April 11th.&quot;
+        - gridcell &quot;No contributions on April 18th.&quot;
+        - gridcell &quot;No contributions on April 25th.&quot;
+        - gridcell &quot;No contributions on May 2nd.&quot;
+        - gridcell &quot;No contributions on May 9th.&quot;
+        - gridcell &quot;No contributions on May 16th.&quot;
+        - gridcell &quot;No contributions on May 23rd.&quot;
+        - gridcell &quot;No contributions on May 30th.&quot;
+        - gridcell &quot;No contributions on June 6th.&quot;
+        - gridcell &quot;No contributions on June 13th.&quot;
+        - gridcell &quot;No contributions on June 20th.&quot;
+        - gridcell &quot;No contributions on June 27th.&quot;
+        - gridcell &quot;No contributions on July 4th.&quot;
+        - gridcell &quot;No contributions on July 11th.&quot;
+        - gridcell &quot;No contributions on July 18th.&quot;
+        - gridcell &quot;No contributions on July 25th.&quot;
+        - gridcell
+      - row:
+        - gridcell &quot;Saturday&quot;
+        - gridcell &quot;No contributions on August 3rd.&quot;
+        - gridcell &quot;No contributions on August 10th.&quot;
+        - gridcell &quot;No contributions on August 17th.&quot;
+        - gridcell &quot;No contributions on August 24th.&quot;
+        - gridcell &quot;No contributions on August 31st.&quot;
+        - gridcell &quot;No contributions on September 7th.&quot;
+        - gridcell &quot;No contributions on September 14th.&quot;
+        - gridcell &quot;No contributions on September 21st.&quot;
+        - gridcell &quot;No contributions on September 28th.&quot;
+        - gridcell &quot;No contributions on October 5th.&quot;
+        - gridcell &quot;No contributions on October 12th.&quot;
+        - gridcell &quot;No contributions on October 19th.&quot;
+        - gridcell &quot;No contributions on October 26th.&quot;
+        - gridcell &quot;No contributions on November 2nd.&quot;
+        - gridcell &quot;No contributions on November 9th.&quot;
+        - gridcell &quot;No contributions on November 16th.&quot;
+        - gridcell &quot;No contributions on November 23rd.&quot;
+        - gridcell &quot;No contributions on November 30th.&quot;
+        - gridcell &quot;No contributions on December 7th.&quot;
+        - gridcell &quot;No contributions on December 14th.&quot;
+        - gridcell &quot;No contributions on December 21st.&quot;
+        - gridcell &quot;No contributions on December 28th.&quot;
+        - gridcell &quot;No contributions on January 4th.&quot;
+        - gridcell &quot;No contributions on January 11th.&quot;
+        - gridcell &quot;No contributions on January 18th.&quot;
+        - gridcell &quot;No contributions on January 25th.&quot;
+        - gridcell &quot;No contributions on February 1st.&quot;
+        - gridcell &quot;No contributions on February 8th.&quot;
+        - gridcell &quot;No contributions on February 15th.&quot;
+        - gridcell &quot;No contributions on February 22nd.&quot;
+        - gridcell &quot;No contributions on March 1st.&quot;
+        - gridcell &quot;No contributions on March 8th.&quot;
+        - gridcell &quot;No contributions on March 15th.&quot;
+        - gridcell &quot;No contributions on March 22nd.&quot;
+        - gridcell &quot;No contributions on March 29th.&quot;
+        - gridcell &quot;No contributions on April 5th.&quot;
+        - gridcell &quot;No contributions on April 12th.&quot;
+        - gridcell &quot;No contributions on April 19th.&quot;
+        - gridcell &quot;No contributions on April 26th.&quot;
+        - gridcell &quot;No contributions on May 3rd.&quot;
+        - gridcell &quot;No contributions on May 10th.&quot;
+        - gridcell &quot;No contributions on May 17th.&quot;
+        - gridcell &quot;No contributions on May 24th.&quot;
+        - gridcell &quot;No contributions on May 31st.&quot;
+        - gridcell &quot;No contributions on June 7th.&quot;
+        - gridcell &quot;No contributions on June 14th.&quot;
+        - gridcell &quot;No contributions on June 21st.&quot;
+        - gridcell &quot;No contributions on June 28th.&quot;
+        - gridcell &quot;No contributions on July 5th.&quot;
+        - gridcell &quot;No contributions on July 12th.&quot;
+        - gridcell &quot;No contributions on July 19th.&quot;
+        - gridcell &quot;No contributions on July 26th.&quot;
+        - gridcell
+  - link &quot;Learn how we count contributions&quot;:
+    - /url: https://docs.github.com/articles/why-are-my-contributions-not-showing-up-on-my-profile
+  - text: Less No contributions. Low contributions. Medium-low contributions. Medium-high contributions. High contributions. More
+  - list:
+    - listitem:
+      - link &quot;Contribution activity in 2025&quot;:
+        - /url: /homepage?tab=overview&amp;from=2025-07-01&amp;to=2025-07-31
+        - text: &quot;2025&quot;
+    - listitem:
+      - link &quot;Contribution activity in 2024&quot;:
+        - /url: /homepage?tab=overview&amp;from=2024-12-01&amp;to=2024-12-31
+        - text: &quot;2024&quot;
+    - listitem:
+      - link &quot;Contribution activity in 2023&quot;:
+        - /url: /homepage?tab=overview&amp;from=2023-12-01&amp;to=2023-12-31
+        - text: &quot;2023&quot;
+    - listitem:
+      - link &quot;Contribution activity in 2022&quot;:
+        - /url: /homepage?tab=overview&amp;from=2022-12-01&amp;to=2022-12-31
+        - text: &quot;2022&quot;
+    - listitem:
+      - link &quot;Contribution activity in 2021&quot;:
+        - /url: /homepage?tab=overview&amp;from=2021-12-01&amp;to=2021-12-31
+        - text: &quot;2021&quot;
+    - listitem:
+      - link &quot;Contribution activity in 2020&quot;:
+        - /url: /homepage?tab=overview&amp;from=2020-12-01&amp;to=2020-12-31
+        - text: &quot;2020&quot;
+    - listitem:
+      - link &quot;Contribution activity in 2019&quot;:
+        - /url: /homepage?tab=overview&amp;from=2019-12-01&amp;to=2019-12-31
+        - text: &quot;2019&quot;
+    - listitem:
+      - link &quot;Contribution activity in 2018&quot;:
+        - /url: /homepage?tab=overview&amp;from=2018-12-01&amp;to=2018-12-31
+        - text: &quot;2018&quot;
+    - listitem:
+      - link &quot;Contribution activity in 2017&quot;:
+        - /url: /homepage?tab=overview&amp;from=2017-12-01&amp;to=2017-12-31
+        - text: &quot;2017&quot;
+    - listitem:
+      - link &quot;Contribution activity in 2016&quot;:
+        - /url: /homepage?tab=overview&amp;from=2016-12-01&amp;to=2016-12-31
+        - text: &quot;2016&quot;
+    - listitem:
+      - link &quot;Contribution activity in 2015&quot;:
+        - /url: /homepage?tab=overview&amp;from=2015-12-01&amp;to=2015-12-31
+        - text: &quot;2015&quot;
+    - listitem:
+      - link &quot;Contribution activity in 2014&quot;:
+        - /url: /homepage?tab=overview&amp;from=2014-12-01&amp;to=2014-12-31
+        - text: &quot;2014&quot;
+    - listitem:
+      - link &quot;Contribution activity in 2013&quot;:
+        - /url: /homepage?tab=overview&amp;from=2013-12-01&amp;to=2013-12-31
+        - text: &quot;2013&quot;
+  - heading &quot;Contribution activity&quot; [level=2]
+  - heading &quot;July 2025&quot; [level=3]
+  - text: homepage has no activity yet for this period. Loading
+  - button &quot;Show more activity&quot;
+- contentinfo:
+  - heading &quot;Footer&quot; [level=2]
+  - link &quot;GitHub Homepage&quot;:
+    - /url: https://github.com
+  - text: © 2025 GitHub, Inc.
+  - navigation &quot;Footer&quot;:
+    - heading &quot;Footer navigation&quot; [level=3]
+    - list &quot;Footer navigation&quot;:
+      - listitem:
+        - link &quot;Terms&quot;:
+          - /url: https://docs.github.com/site-policy/github-terms/github-terms-of-service
+      - listitem:
+        - link &quot;Privacy&quot;:
+          - /url: https://docs.github.com/site-policy/privacy-policies/github-privacy-statement
+      - listitem:
+        - link &quot;Security&quot;:
+          - /url: https://github.com/security
+      - listitem:
+        - link &quot;Status&quot;:
+          - /url: https://www.githubstatus.com/
+      - listitem:
+        - link &quot;Docs&quot;:
+          - /url: https://docs.github.com/
+      - listitem:
+        - link &quot;Contact&quot;:
+          - /url: https://support.github.com?tags=dotcom-footer
+      - listitem:
+        - button &quot;Manage cookies&quot;
+      - listitem:
+        - button &quot;Do not share my personal information&quot;
+</code></pre>
+
+      </div>
+    </body>
+    </html>
+  
