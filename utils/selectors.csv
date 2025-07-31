@@ -1,0 +1,5 @@
+# key,selector
+loginButton,.btn-login
+usernameInput,#username
+passwordInput,#password
+submitButton,.btn-submit

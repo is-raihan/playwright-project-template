@@ -1,5 +1,5 @@
 {
-  "name": "playwright_js",
+  "name": "playwright project template",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -15,6 +15,10 @@
     "test:debug:headed": "playwright test --headed --debug",
     "test:allure": "playwright test --report=allure-playwright",
     "test:allure:open": "allure open allure-results",
+    "allure:generate": "allure generate allure-results -o allure-report --clean",
+    "allure:serve": "allure serve allure-results",
+    "allure:clear": "rm -rf allure-results/* && rm -rf allure-report/*",
+    "test:with-allure": "npm run allure:clear && playwright test --reporter=allure-playwright",
     "test:mail": "playwright test --report=mail",
     "test:mail:open": "playwright mail-reporter --report=mail",
     "NPM:Install": "npm i",
@@ -23,14 +27,15 @@
     "test:prod": "cross-env NODE_ENV=prod npx playwright test --headed"
   },
   "keywords": [],
-  "author": "shikder shondhi",
+  "author": "Raihan Khan",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "@playwright/test": "^1.52.0",
+    "@playwright/test": "^1.54.1",
     "@types/node": "^22.15.18",
     "cross-env": "^7.0.3",
     "dotenv": "^16.5.0",
+    "ortoni-report": "^3.0.5",
     "typescript": "^5.8.3"
   },
   "dependencies": {

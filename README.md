@@ -1,11 +1,148 @@
 
-# 🎭 Playwright
+# 🎭 Playwright E2E Testing Project
 
-[![npm version](https://img.shields.io/npm/v/playwright.svg)](https://www.npmjs.com/package/playwright) <!-- GEN:chromium-version-badge -->[![Chromium version](https://img.shields.io/badge/chromium-136.0.7103.25-blue.svg?logo=google-chrome)](https://www.chromium.org/Home)<!-- GEN:stop --> <!-- GEN:firefox-version-badge -->[![Firefox version](https://img.shields.io/badge/firefox-137.0-blue.svg?logo=firefoxbrowser)](https://www.mozilla.org/en-US/firefox/new/)<!-- GEN:stop --> <!-- GEN:webkit-version-badge -->[![WebKit version](https://img.shields.io/badge/webkit-18.4-blue.svg?logo=safari)](https://webkit.org/)<!-- GEN:stop --> [![Join Discord](https://img.shields.io/badge/join-discord-infomational)](https://aka.ms/playwright/discord)
+A comprehensive end-to-end testing suite using Playwright with multiple reporting tools integration.
 
-## [Documentation](https://playwright.dev) | [API reference](https://playwright.dev/docs/api/class-playwright)
+## Features
 
-Playwright is a framework for Web Testing and Automation. It allows testing [Chromium](https://www.chromium.org/Home), [Firefox](https://www.mozilla.org/en-US/firefox/new/) and [WebKit](https://webkit.org/) with a single API. Playwright is built to enable cross-browser web automation that is **ever-green**, **capable**, **reliable** and **fast**.
+- Multi-browser testing (Chrome, Firefox, Safari, Edge)
+- Mobile viewport testing
+- Multiple reporting tools:
+  - Ortoni Report
+  - Allure Report
+  - HTML Report
+- CSV-based selector management
+- Environment-based configuration
+- CI/CD ready
+
+# Playwright Project Template
+
+## Setup
+
+### Prerequisites
+
+- Node.js (v14 or higher)
+- npm (v6 or higher)
+- Java Runtime Environment (for Allure reporting)
+
+### Project Setup
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/is-raihan/playwright-project-template.git
+cd playwright-project-template
+```
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+1. Install Playwright browsers:
+
+```bash
+npx playwright install
+```
+
+1. Install Allure command-line tool:
+
+```bash
+npm install -g allure-commandline
+```
+
+## Test Structure
+
+```plaintext
+tests/
+├── e2e/                    # End-to-end test files
+├── fixtures/               # Test fixtures and data
+└── utils/                  # Helper functions and utilities
+```
+
+## Running Tests
+
+### Basic Test Commands
+
+- Run all tests:
+
+```bash
+npm test
+```
+
+- Run tests in headed mode:
+
+```bash
+npm run test:headed
+```
+
+- Run tests in UI mode:
+
+```bash
+npm run test:ui
+```
+
+### Environment-specific Tests
+
+- Development environment:
+
+```bash
+npm run test:dev
+```
+
+- Staging environment:
+
+```bash
+npm run test:stage
+```
+
+- Production environment:
+
+```bash
+npm run test:prod
+```
+
+### Browser-specific Tests
+
+- Run tests in Chromium:
+
+```bash
+npm run test:chromium
+```
+
+## Reporting
+
+### Ortoni Report
+
+- Run tests with Ortoni reporting:
+
+```bash
+npm run test:dev
+```
+
+Reports are generated in `report-db/index.html`
+
+### Allure Report
+
+- Run tests with Allure reporting:
+
+```bash
+npm run test:with-allure
+```
+
+- Generate and view Allure report:
+
+```bash
+npm run allure:generate
+npm run allure:serve
+```
+
+- Clear Allure results:
+
+```bash
+npm run allure:clear
+```
 
 Headless execution is supported for all browsers on all platforms. Check out [system requirements](https://playwright.dev/docs/intro#system-requirements) for details.
 
@@ -40,8 +177,8 @@ npx playwright install
 
 You can optionally install only selected browsers, see [install browsers](https://playwright.dev/docs/cli#install-browsers) for more details. Or you can install no browsers at all and use existing [browser channels](https://playwright.dev/docs/browsers).
 
-* [Getting started](https://playwright.dev/docs/intro)
-* [API reference](https://playwright.dev/docs/api/class-playwright)
+- [Getting started](https://playwright.dev/docs/intro)
+- [API reference](https://playwright.dev/docs/api/class-playwright)
 
 ## Capabilities
 
@@ -157,7 +294,7 @@ test('Intercept network requests', async ({ page }) => {
 
 ## Resources
 
-* [Documentation](https://playwright.dev)
-* [API reference](https://playwright.dev/docs/api/class-playwright/)
-* [Contribution guide](CONTRIBUTING.md)
-* [Changelog](https://github.com/microsoft/playwright/releases)
+- [Documentation](https://playwright.dev)
+- [API reference](https://playwright.dev/docs/api/class-playwright/)
+- [Contribution guide](CONTRIBUTING.md)
+- [Changelog](https://github.com/microsoft/playwright/releases)
